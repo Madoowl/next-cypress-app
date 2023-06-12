@@ -25,7 +25,9 @@ jobs:
       - uses: actions/cache@v3
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
-          path: node_modules
+          path: |
+            node_modules
+            /home/runner/.cache/Cypress
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
       - run: npm run e2e:headless
       - uses: actions/upload-artifact@v3
