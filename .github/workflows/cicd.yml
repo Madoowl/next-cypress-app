@@ -16,10 +16,4 @@ jobs:
         with: 
           name: e2e-test-video
           path: cypress/videos
-          # if-no-files-found: ignore
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: npm install 
-  #     - run: npm run build
+          if-no-files-found: ignore
