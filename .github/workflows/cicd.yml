@@ -2,7 +2,7 @@ name: run ci cd
 run-name: ${{ github.actor }} is launching ci cd
 on: [push]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,9 +17,9 @@ jobs:
           name: e2e-test-video
           path: cypress/videos
           # if-no-files-found: ignore
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: npm install 
-      - run: npm run build
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: npm install 
+  #     - run: npm run build
