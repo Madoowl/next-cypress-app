@@ -2,37 +2,48 @@ name: Run complete workflow
 run-name: ${{ github.actor }} is launching the complete cicd workflow
 on: [push]
 jobs:
-  build:
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: install dependencies and build
+  #       run: | 
+  #         npm install  
+  #         npm run build
+  #     - uses: actions/cache@v3
+  #       id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+  #       with:
+  #         path: |
+  #           node_modules
+  #           /home/runner/.cache/Cypress
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
+  # test:
+  #   needs: build #depends on build job
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/cache@v3
+  #       id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+  #       with:
+  #         path: |
+  #           node_modules
+  #           /home/runner/.cache/Cypress
+  #         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
+  #     - run: npm run e2e:headless
+  #     - uses: actions/upload-artifact@v3
+  #       if: ${{ always() }}
+  #       with: 
+  #         name: e2e-test-video
+  #         path: cypress/videos
+  #         if-no-files-found: ignore
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: install dependencies and build
-        run: | 
-          npm install  
-          npm run build
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: |
-            node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
-  test:
-    needs: build #depends on build job
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
-        with:
-          path: |
-            node_modules
-            /home/runner/.cache/Cypress
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
-      - run: npm run e2e:headless
-      - uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with: 
-          name: e2e-test-video
-          path: cypress/videos
-          if-no-files-found: ignore
+    # -name : checkout
+    #   uses: actions/checkout@v3
+    # - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+      - run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd next-cypress-app/ && git pull && npm install && npm run build && pm2 restart all"
