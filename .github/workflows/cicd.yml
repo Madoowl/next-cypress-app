@@ -11,9 +11,9 @@ jobs:
         npm install
         npm run build
         run : npm run e2e:headless
-      - name : upload videao
+      - name : upload video
+        if: ${{ always() }}
         uses: actions/upload-artifact@v3
-        if: always()
         with: 
           name: video
           path: cypress/videos
