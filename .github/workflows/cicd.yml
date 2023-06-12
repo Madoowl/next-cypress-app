@@ -11,13 +11,12 @@ jobs:
         npm install 
         npm run build
        run: npm run e2e:headless
-      - name : upload video
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with: 
-          name: video
+          name: e2e-test-video
           path: cypress/videos
-          if-no-files-found: ignore
+          # if-no-files-found: ignore
   build:
     runs-on: ubuntu-latest
     steps:
