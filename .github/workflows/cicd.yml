@@ -6,13 +6,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cypress-io/github-action@v4
-        with:
-          build: npm run build
-          start: npm run start
-          browser: chrome
-          headed: false
-          
+      - name : isntall dependencies
+        run: 
+        npm install
+        npm run build
+        run : npm run e2e:headless
+      - name : upload videao
+        uses: actions/upload-artifact@v3
+        if: always()
+        with: 
+          name: video
+          path: cypress/videos
+          if-no-files-found: ignore
   build:
     runs-on: ubuntu-latest
     steps:
