@@ -1,17 +1,17 @@
 name: run ci cd
-run-name: ${{ github.actor }} is launching ci cd
+run-name: ${{ github.actor }} is launching ci cd with tests
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name : install dependencies and build
+      - name: install dependencies and build
         run: | 
           npm install 
           npm run build
-       run: npm run e2e:headless
-        uses: actions/upload-artifact@v3
+      - run: npm run e2e:headless
+      -  uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with: 
           name: e2e-test-video
