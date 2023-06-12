@@ -21,11 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
-      run : cypress install
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} #changé si le package-lock.json change, vérif si le hash du cache a changé
+      - run : cypress install
       - run: npm run e2e:headless
       - uses: actions/upload-artifact@v3
         if: ${{ always() }}
