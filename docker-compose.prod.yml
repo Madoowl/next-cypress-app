@@ -1,0 +1,5 @@
+version: '1'
+services:
+  next:
+    image: ghcr.io/madoowl/next-cypress-app:latest
+    ports: 3000:3000
