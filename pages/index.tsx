@@ -16,7 +16,7 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to{" "}
           <a href="https://nextjs.org">
-            Next.js with Watchtower! Third time test
+            Next.js with Watchtower! Fourth time test
           </a>
         </h1>
 
