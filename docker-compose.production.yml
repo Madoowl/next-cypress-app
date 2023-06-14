@@ -1,0 +1,21 @@
+services:
+  next:
+    image: ghcr.io/madoowl/next-cypress-app:latest
+    restart: always
+    ports: 
+      - 3000:3000
+      
+  db:
+    image: mariadb:10.6
+    environment:
+      MARIADB_DATABASE: cube
+      MARIADB_USER: cube
+      MARIADB_PASSWORD: cube
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
