@@ -1,10 +1,9 @@
-version: '1'
 services:
   next:
     image: ghcr.io/madoowl/next-cypress-app:latest
     restart: always
     ports: 
-      -3000:3000
+      - 3000:3000
   watchtower:
     image: containrrr/watchtower
     volumes:
