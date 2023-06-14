@@ -52,7 +52,7 @@ jobs:
     needs: [test]
     environment:
       name: production
-      url: http://35.181.58.20:3000
+      url: http://44.202.130.52:3000
     if: github.ref_name == 'main'
     permissions:
       contents: read
