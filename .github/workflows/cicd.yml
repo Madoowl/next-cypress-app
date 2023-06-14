@@ -1,6 +1,6 @@
-on: [ push ]
 name: Complete CICD with docker deployment
 run-name: ${{ github.actor }} is launching ci cd with tests and deployment
+on: [ push ]
 jobs:
   build:
     runs-on: ubuntu-latest
